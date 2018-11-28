@@ -8,14 +8,7 @@ function CreateForm(props) {
   function handleFormSubmit(event){
     event.preventDefault();
 
-    props.onNewTama({
-      name: _newTamaName.value,
-      foodLevel: 100,
-      happiness: 100,
-      sleepLevel: 100,
-      age: 0,
-      id: v4()
-    });
+    props.onNewTama(_newTamaName.value);
     _newTamaName.value = "";
   }
 

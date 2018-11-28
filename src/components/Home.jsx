@@ -7,14 +7,13 @@ function Home(props) {
   return (
     <div>
       <CreateForm onNewTama={props.onNewTama} />
-      {props.tamaList.map((tama) => (
-        <Link to='/detail' key={tama.id}>{tama.name}</Link>
-      ))}
+      <Link to='/detail'>{props.tamagotchi.name}</Link>
     </div>
   );
 }
 
 Home.propTypes = {
+  tamagotchi: PropTypes.object,
   onNewTama: PropTypes.func
 };
 

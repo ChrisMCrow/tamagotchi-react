@@ -9,25 +9,78 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      masterTamaList: [
-        {
-          name: 'Melagotchi',
-          foodLevel: 100,
-          happiness: 100,
-          sleepLevel: 100,
-          age: 0,
-          id: 0
-        }
-      ]
+      masterTama: 
+      {
+        name: 'Melagotchi',
+        foodLevel: 80,
+        sleepLevel: 50,
+        isSleeping: false,
+        happiness: 50,
+        isSick: false,
+        poop: false,
+        weight: '1 lbs',
+        bad: false,
+        alert: false,
+        age: 0,
+        id: 0
+      }
     };
     this.handleNewTama = this.handleNewTama.bind(this);
+    this.handleFeed = this.handleFeed.bind(this);
+    this.handleSleep = this.handleSleep.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
+    this.handleHeal = this.handleHeal.bind(this);
   }
 
-  handleNewTama(newTama) {
-    let newTamaList = this.state.masterTamaList.slice();
-    newTamaList.push(newTama);
-    this.setState({masterTamaList: newTamaList});
+  handleNewTama(newTamaName) {
+    let newTama = this.state.masterTama;
+    newTama.name = newTamaName;
+    this.setState({masterTama: newTama});
   }
+
+  handleFeed() {
+    let newTama = this.state.masterTama;
+    if (newTama.foodLevel < 75) {
+      newTama.foodLevel += 25;
+    } else if (newTama.foodLevel <= 100) {
+      newTama.foodLevel = 100;
+    } 
+    this.setState({masterTama: newTama});
+  }
+
+  handleSleep() {
+    let newTama = this.state.masterTama;
+    if (!newTama.isSleeping) {
+      newTama.isSleeping = true;
+      let sleepInterval = setInterval(() => { 
+        if (newTama.sleepLevel < 100) {
+          newTama.sleepLevel += 1;
+          this.setState({masterTama: newTama});
+        } else {
+          clearInterval(sleepInterval);
+          newTama.isSleeping = false;
+        }
+      }, 1000);
+    }
+  }
+
+  handlePlay() {
+    let newTama = this.state.masterTama;
+    if (newTama.happiness < 75) {
+      newTama.happiness += 25;
+    } else if (newTama.happiness <= 100) {
+      newTama.happiness = 100;
+    } 
+    this.setState({masterTama: newTama});
+  }
+
+
+  handleHeal() {
+    let newTama = this.state.masterTama;
+    newTama.isSick = false;
+    this.setState({masterTama: newTama});
+  }
+
   
   render() {
     return (
@@ -41,8 +94,14 @@ class App extends React.Component {
         `}</style>
         <img src={logo} id='logo'/>
         <Switch>
-          <Route exact path='/' render={() => <Home onNewTama = {this.handleNewTama} tamaList={this.state.masterTamaList}/>} />
-          <Route path='/detail' render={() => <TamaDetail tamaList={this.state.masterTamaList}/>} />
+          <Route exact path='/' render={() => <Home onNewTama = {this.handleNewTama} tamagotchi={this.state.masterTama}/>} />
+          <Route path='/detail' render={() => <TamaDetail 
+            tamagotchi={this.state.masterTama}
+            onFeed={this.handleFeed}
+            onSleep={this.handleSleep}
+            onPlay={this.handlePlay}
+            onHeal={this.handleHeal}
+          />} />
         </Switch>
       </div>
     );
