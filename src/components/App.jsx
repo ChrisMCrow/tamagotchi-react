@@ -12,17 +12,17 @@ class App extends React.Component {
       masterTama: 
       {
         name: 'Melagotchi',
-        foodLevel: 80,
+        foodLevel: 100,
         sleepLevel: 50,
         isSleeping: false,
-        happiness: 50,
+        happiness: 100,
         isSick: false,
         isPoopy: false,
         displayStats: false,
         weight: '1 lbs',
         age: 0,
         isBad: false,
-        discliplineLevel: 50,
+        disciplineLevel: 50,
         alert: false,
         isDead: false,
         id: 0
@@ -43,6 +43,14 @@ class App extends React.Component {
     this.sleepLevelInterval = setInterval(() => this.sleepLevelTime(), 500);
     this.playLevellInterval = setInterval(() => this.playLevelTime(), 200);
     this.ageInterval = setInterval(() => this.ageTime(), 10000);
+    this.checkAlertInterval  = setInterval(() => {
+      let tama = this.state.masterTama;
+      if(tama.foodLevel < 25 || tama.sleepLevel <= 0 || tama.happiness < 25 || tama.isSick || tama.isPoopy || tama.isBad) {
+        tama.alert = true;
+      } else {
+        tama.alert = false;        
+      }
+    }, 1000);
     this.checkDeathInterval = setInterval(() => {
       let newTama = this.state.masterTama;
       if(newTama.foodLevel <= 0 || newTama.happiness <= 0) {
@@ -51,8 +59,10 @@ class App extends React.Component {
         clearInterval(this.sleepLevelInterval);
         clearInterval(this.playLevellInterval);
         clearInterval(this.ageInterval);
+        clearInterval(this.checkDeathInterval);
+        this.setState({masterTama: newTama});
       }
-    }, 1000)
+    }, 1000);
   }
 
   componentWillUnmount(){
@@ -93,7 +103,7 @@ class App extends React.Component {
 
   handleFeed() {
     let newTama = this.state.masterTama;
-    if (!newTama.isDead) {
+    if (!newTama.isDead && !newTama.isSleeping) {
       if (newTama.foodLevel < 75) {
         newTama.foodLevel += 25;
       } else if (newTama.foodLevel <= 100) {
@@ -102,7 +112,7 @@ class App extends React.Component {
       setTimeout(() => {
         newTama.isPoopy = true;
         this.sickCountdown();
-      }, 30000)
+      }, 30000);
       this.setState({masterTama: newTama});
     }
   }
@@ -113,6 +123,10 @@ class App extends React.Component {
       setTimeout(() => {
         if (newTama.isPoopy) {
           newTama.isSick = true;
+          setTimeout(() => {
+            if (newTama.isSick) 
+              newTama.isDead = true;
+          }, 60000);
         }
       }, 60000);
     }
@@ -140,7 +154,7 @@ class App extends React.Component {
 
   handlePlay() {
     let newTama = this.state.masterTama;
-    if (!newTama.isDead) {
+    if (!newTama.isDead && !newTama.isSleeping) {
       if (newTama.happiness < 75) {
         newTama.happiness += 25;
       } else if (newTama.happiness <= 100) {
@@ -148,6 +162,12 @@ class App extends React.Component {
       } 
       this.setState({masterTama: newTama});
     }
+  }
+
+  handleSick() {
+    let newTama = this.state.masterTama;
+    newTama.isSick = false;
+    this.setState({masterTama: newTama});
   }
 
   handleHeal() {
@@ -171,14 +191,13 @@ class App extends React.Component {
   handleDiscipline() {
     let newTama = this.state.masterTama;
     newTama.isBad ? (
-      newTama.discliplineLevel += 20, 
+      newTama.discipline += 20, 
       newTama.isBad = false
     ) : (
       newTama.displineLevel -= 5
     );
     this.setState({masterTama: newTama});
   }
-
   
   render() {
     return (

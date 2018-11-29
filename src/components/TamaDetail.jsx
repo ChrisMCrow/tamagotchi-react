@@ -41,16 +41,9 @@ function TamaDetail(props) {
           onFlush={props.onFlush}
           onStats={props.onStats}
           onDiscipline={props.onDiscipline}
+          tamagotchi={props.tamagotchi}
         />
       </div>
-
-      <ul>
-        <li>Name: {props.tamagotchi.name}</li>
-        <li>Food Level: {props.tamagotchi.foodLevel}</li>
-        <li>Happiness: {props.tamagotchi.happiness}</li>
-        <li>Sleep Level: {props.tamagotchi.sleepLevel}</li>
-        <li>Age: {props.tamagotchi.age}</li>
-      </ul>
     </div>
   );
 }
