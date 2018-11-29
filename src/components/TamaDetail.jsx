@@ -37,7 +37,11 @@ function TamaDetail(props) {
         <TamaBody 
           tamagotchi={props.tamagotchi}
         />
-        <BottomMenu />
+        <BottomMenu 
+          onFlush={props.onFlush}
+          onStats={props.onStats}
+          onDiscipline={props.onDiscipline}
+        />
       </div>
 
       <ul>

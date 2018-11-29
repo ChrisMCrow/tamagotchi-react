@@ -17,11 +17,13 @@ class App extends React.Component {
         isSleeping: false,
         happiness: 50,
         isSick: false,
-        poop: false,
+        isPoopy: false,
+        displayStats: false,
         weight: '1 lbs',
-        bad: false,
-        alert: false,
         age: 0,
+        isBad: false,
+        discliplineLevel: 50,
+        alert: false,
         isDead: false,
         id: 0
       }
@@ -31,6 +33,9 @@ class App extends React.Component {
     this.handleSleep = this.handleSleep.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
     this.handleHeal = this.handleHeal.bind(this);
+    this.handleFlush = this.handleFlush.bind(this);
+    this.handleStats = this.handleStats.bind(this);
+    this.handleDiscipline = this.handleDiscipline.bind(this);
   }
 
   componentDidMount() {
@@ -73,13 +78,13 @@ class App extends React.Component {
     newTama.happiness--;
     this.setState({masterTama: newTama});
   }
-
+  
   ageTime() {
     let newTama = this.state.masterTama;
     newTama.age++;
     this.setState({masterTama: newTama});
   }
-
+  
   handleNewTama(newTamaName) {
     let newTama = this.state.masterTama;
     newTama.name = newTamaName;
@@ -93,8 +98,23 @@ class App extends React.Component {
         newTama.foodLevel += 25;
       } else if (newTama.foodLevel <= 100) {
         newTama.foodLevel = 100;
-      } 
+      }
+      setTimeout(() => {
+        newTama.isPoopy = true;
+        this.sickCountdown();
+      }, 30000)
       this.setState({masterTama: newTama});
+    }
+  }
+
+  sickCountdown() {
+    let newTama = this.state.masterTama;
+    if (newTama.isPoopy) {
+      setTimeout(() => {
+        if (newTama.isPoopy) {
+          newTama.isSick = true;
+        }
+      }, 60000);
     }
   }
 
@@ -130,10 +150,32 @@ class App extends React.Component {
     }
   }
 
-
   handleHeal() {
     let newTama = this.state.masterTama;
     newTama.isSick = false;
+    this.setState({masterTama: newTama});
+  }
+
+  handleFlush() {
+    let newTama = this.state.masterTama;
+    newTama.isPoopy = false;
+    this.setState({masterTama: newTama});
+  }
+
+  handleStats() {
+    let newTama = this.state.masterTama;
+    newTama.displayStats ? newTama.displayStats = false : newTama.displayStats = true;
+    this.setState({masterTama: newTama});
+  }
+
+  handleDiscipline() {
+    let newTama = this.state.masterTama;
+    newTama.isBad ? (
+      newTama.discliplineLevel += 20, 
+      newTama.isBad = false
+    ) : (
+      newTama.displineLevel -= 5
+    );
     this.setState({masterTama: newTama});
   }
 
@@ -157,6 +199,9 @@ class App extends React.Component {
             onSleep={this.handleSleep}
             onPlay={this.handlePlay}
             onHeal={this.handleHeal}
+            onFlush={this.handleFlush}
+            onStats={this.handleStats}
+            onDiscipline={this.handleDiscipline}
           />} />
         </Switch>
       </div>
