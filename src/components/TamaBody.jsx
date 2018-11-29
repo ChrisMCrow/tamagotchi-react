@@ -5,7 +5,7 @@ import TamaDefault from './assets/tamaDefault.png';
 import TamaSleep from './assets/tamaSleep.png';
 import Stats from './Stats';
 import PoopImg from './assets/poop.png';
-import GhostImg from './assets/ghost.png';
+import DeadImg from './assets/dead.png';
 import SickImg from './assets/sick.png';
 
 function TamaBody(props) {
@@ -18,6 +18,10 @@ function TamaBody(props) {
         background-repeat: no-repeat;
         height: 210px;
       }
+      .dead-img {
+        width: 200px;
+        margin: 40px 0 0 70px;
+      }
       .tama-sprite {
         width: 100px;
         margin: 90px 0 0 120px;
@@ -29,7 +33,7 @@ function TamaBody(props) {
         width: 70px;
         position: absolute;
         left: 40px;
-        top: 130px;
+        top: 120px;
       }
     
     `}</style>;
@@ -43,7 +47,7 @@ function TamaBody(props) {
     return(
       <div className='tama-body'>
         {defaultStyle}
-        <img className='tama-sprite' src={GhostImg}/>
+        <img className='dead-img' src={DeadImg}/>
       </div>
     )
   } else if (props.tamagotchi.isSleeping) {

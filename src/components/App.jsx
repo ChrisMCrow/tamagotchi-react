@@ -15,6 +15,7 @@ class App extends React.Component {
         foodLevel: 100,
         sleepLevel: 50,
         isSleeping: false,
+        isRestless: false,
         happiness: 100,
         isSick: false,
         isPoopy: false,
@@ -28,6 +29,7 @@ class App extends React.Component {
         id: 0
       }
     };
+    this.misbehaveTime = 1000 * this.state.masterTama.disciplineLevel;
     this.handleNewTama = this.handleNewTama.bind(this);
     this.handleFeed = this.handleFeed.bind(this);
     this.handleSleep = this.handleSleep.bind(this);
@@ -40,10 +42,8 @@ class App extends React.Component {
 
   componentDidMount() {
     this.foodLevelInterval = setInterval(() => this.foodLevelTime(), 1200);
-    this.sleepLevelInterval = setInterval(() => this.sleepLevelTime(), 800);
     this.playLevellInterval = setInterval(() => this.playLevelTime(), 1000);
     this.ageInterval = setInterval(() => this.ageTime(), 10000);
-    this.badInterval = setInterval(() => this.disciplineTime())
     this.checkAlertInterval  = setInterval(() => {
       let tama = this.state.masterTama;
       if(tama.foodLevel < 25 || tama.sleepLevel <= 0 || tama.happiness < 25 || tama.isSick || tama.isPoopy || tama.isBad) {
@@ -57,13 +57,22 @@ class App extends React.Component {
       if(newTama.foodLevel <= 0 || newTama.happiness <= 0 || newTama.isDead) {
         newTama.isDead = true;
         clearInterval(this.foodLevelInterval);
-        clearInterval(this.sleepLevelInterval);
         clearInterval(this.playLevellInterval);
         clearInterval(this.ageInterval);
         clearInterval(this.checkDeathInterval);
         this.setState({masterTama: newTama});
       }
     }, 1000);
+    this.badTimeout();
+    this.lightsOn();
+  }
+
+  badTimeout() {
+    setTimeout (() => { 
+      console.log('bad interval');
+      this.misbehave();
+      this.badTimeout();
+    }, 1000 * this.state.masterTama.disciplineLevel);
   }
 
   componentWillUnmount(){
@@ -78,14 +87,6 @@ class App extends React.Component {
     this.setState({masterTama: newTama});
   }
 
-  sleepLevelTime() {
-    let newTama = this.state.masterTama;
-    if (newTama.sleepLevel > 0) {
-      newTama.sleepLevel--;
-    }
-    this.setState({masterTama: newTama});
-  }
-
   playLevelTime() {
     let newTama = this.state.masterTama;
     newTama.happiness--;
@@ -95,6 +96,13 @@ class App extends React.Component {
   ageTime() {
     let newTama = this.state.masterTama;
     newTama.age++;
+    this.setState({masterTama: newTama});
+  }
+
+  misbehave() {
+    console.log('misbehave');
+    let newTama = this.state.masterTama;
+    newTama.isBad = true;
     this.setState({masterTama: newTama});
   }
   
@@ -137,25 +145,49 @@ class App extends React.Component {
 
   handleSleep() {
     let newTama = this.state.masterTama;
-    if (!newTama.isDead) {
-      if (!newTama.isSleeping) {
-        newTama.isSleeping = true;
-        clearInterval(this.sleepLevelInterval);
-        let sleepingInterval = setInterval(() => { 
-          if (newTama.sleepLevel < 100) {
-            newTama.sleepLevel += 1;
-            this.setState({masterTama: newTama});
-          } else {
-            clearInterval(sleepingInterval);
-            this.sleepLevelInterval = setInterval(() => this.sleepLevelTime(), 500);
-            newTama.isSleeping = false;
-          }
-        }, 500);
-      } else {
-        newTama.isSleeping = false;
+    if (newTama.isSleeping) {
+      newTama.isSleeping = false;
+      this.setState({masterTama: newTama});
+      this.lightsOn();
+    } else {
+      newTama.isSleeping = true;
+      this.setState({masterTama: newTama});
+      this.lightsOff();
+    }
+  }
+
+  lightsOn() {
+    let newTama = this.state.masterTama;
+    const sleepInterval = setInterval(() => {
+      newTama.sleepLevel--;
+      this.setState({masterTama: newTama});
+      if (newTama.isSleeping) {
+        clearInterval(sleepInterval);
+      } else if (newTama.sleepLevel <= 0) {
+        clearInterval(sleepInterval);
+        newTama.sleepLevel = 0;
+        newTama.isRestless = true;
         this.setState({masterTama: newTama});
       }
-    }
+    }, 400);
+  }
+
+  lightsOff() {
+    let newTama = this.state.masterTama;
+    const restInterval = setInterval(() => {
+      newTama.isRestless = false;
+      newTama.sleepLevel+=1;
+      this.setState({masterTama: newTama});
+      if (!newTama.isSleeping) {
+        clearInterval(restInterval);
+      }
+      if (newTama.sleepLevel >= 100) {
+        clearInterval(restInterval);
+        newTama.isSleeping = false;
+        this.setState({masterTama: newTama});
+        this.lightsOn();
+      }
+    }, 400);
   }
 
   handlePlay() {
@@ -195,14 +227,16 @@ class App extends React.Component {
   }
 
   handleDiscipline() {
+    console.log('discipline button clicked');
     let newTama = this.state.masterTama;
-    newTama.isBad ? (
-      newTama.discipline += 20, 
-      newTama.isBad = false
-    ) : (
-      newTama.displineLevel -= 5
-    );
-    this.setState({masterTama: newTama});
+    if (newTama.isBad) {
+      newTama.disciplineLevel += 20; 
+      newTama.isBad = false;
+      this.setState({masterTama: newTama});
+    } else {
+      newTama.disciplineLevel -= 5;
+      this.setState({masterTama: newTama});
+    }
   }
   
   render() {
