@@ -56,6 +56,6 @@ TopMenu.propTypes = {
   onSleep: PropTypes.func,
   onPlay: PropTypes.func,
   onHeal: PropTypes.func
-}
+};
 
 export default TopMenu;

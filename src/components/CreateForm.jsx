@@ -9,13 +9,13 @@ function CreateForm(props) {
     event.preventDefault();
 
     props.onNewTama(_newTamaName.value);
-    _newTamaName.value = "";
+    _newTamaName.value = '';
   }
 
   return(
     <div>
       <form onSubmit={handleFormSubmit}>
-        <input type="text" ref={(input)=>{_newTamaName=input}}/>
+        <input type="text" ref={(input)=>{_newTamaName=input;}}/>
         <button className='btn btn-success' type='submit'>Create New Tamagotchi!</button>
       </form>
     </div>

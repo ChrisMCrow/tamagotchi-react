@@ -22,6 +22,7 @@ class App extends React.Component {
         bad: false,
         alert: false,
         age: 0,
+        isDead: false,
         id: 0
       }
     };
@@ -32,6 +33,53 @@ class App extends React.Component {
     this.handleHeal = this.handleHeal.bind(this);
   }
 
+  componentDidMount() {
+    this.foodLevelInterval = setInterval(() => this.foodLevelTime(), 800);
+    this.sleepLevelInterval = setInterval(() => this.sleepLevelTime(), 500);
+    this.playLevellInterval = setInterval(() => this.playLevelTime(), 200);
+    this.ageInterval = setInterval(() => this.ageTime(), 10000);
+    this.checkDeathInterval = setInterval(() => {
+      let newTama = this.state.masterTama;
+      if(newTama.foodLevel <= 0 || newTama.happiness <= 0) {
+        newTama.isDead = true;
+        clearInterval(this.foodLevelInterval);
+        clearInterval(this.sleepLevelInterval);
+        clearInterval(this.playLevellInterval);
+        clearInterval(this.ageInterval);
+      }
+    }, 1000)
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.foodLevelInterval);
+    clearInterval(this.sleepLevelInterval);
+    clearInterval(this.playLevellInterval);
+  }
+
+  foodLevelTime() {
+    let newTama = this.state.masterTama;
+    newTama.foodLevel--;
+    this.setState({masterTama: newTama});
+  }
+
+  sleepLevelTime() {
+    let newTama = this.state.masterTama;
+    newTama.sleepLevel--;
+    this.setState({masterTama: newTama});
+  }
+
+  playLevelTime() {
+    let newTama = this.state.masterTama;
+    newTama.happiness--;
+    this.setState({masterTama: newTama});
+  }
+
+  ageTime() {
+    let newTama = this.state.masterTama;
+    newTama.age++;
+    this.setState({masterTama: newTama});
+  }
+
   handleNewTama(newTamaName) {
     let newTama = this.state.masterTama;
     newTama.name = newTamaName;
@@ -40,38 +88,46 @@ class App extends React.Component {
 
   handleFeed() {
     let newTama = this.state.masterTama;
-    if (newTama.foodLevel < 75) {
-      newTama.foodLevel += 25;
-    } else if (newTama.foodLevel <= 100) {
-      newTama.foodLevel = 100;
-    } 
-    this.setState({masterTama: newTama});
+    if (!newTama.isDead) {
+      if (newTama.foodLevel < 75) {
+        newTama.foodLevel += 25;
+      } else if (newTama.foodLevel <= 100) {
+        newTama.foodLevel = 100;
+      } 
+      this.setState({masterTama: newTama});
+    }
   }
 
   handleSleep() {
     let newTama = this.state.masterTama;
-    if (!newTama.isSleeping) {
-      newTama.isSleeping = true;
-      let sleepInterval = setInterval(() => { 
-        if (newTama.sleepLevel < 100) {
-          newTama.sleepLevel += 1;
-          this.setState({masterTama: newTama});
-        } else {
-          clearInterval(sleepInterval);
-          newTama.isSleeping = false;
-        }
-      }, 1000);
+    if (!newTama.isDead) {
+      if (!newTama.isSleeping) {
+        newTama.isSleeping = true;
+        clearInterval(this.sleepLevelInterval);
+        let sleepingInterval = setInterval(() => { 
+          if (newTama.sleepLevel < 100) {
+            newTama.sleepLevel += 1;
+            this.setState({masterTama: newTama});
+          } else {
+            clearInterval(sleepingInterval);
+            this.sleepLevelInterval = setInterval(() => this.sleepLevelTime(), 500);
+            newTama.isSleeping = false;
+          }
+        }, 1000);
+      }
     }
   }
 
   handlePlay() {
     let newTama = this.state.masterTama;
-    if (newTama.happiness < 75) {
-      newTama.happiness += 25;
-    } else if (newTama.happiness <= 100) {
-      newTama.happiness = 100;
-    } 
-    this.setState({masterTama: newTama});
+    if (!newTama.isDead) {
+      if (newTama.happiness < 75) {
+        newTama.happiness += 25;
+      } else if (newTama.happiness <= 100) {
+        newTama.happiness = 100;
+      } 
+      this.setState({masterTama: newTama});
+    }
   }
 
 

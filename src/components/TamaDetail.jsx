@@ -34,7 +34,9 @@ function TamaDetail(props) {
           onPlay={props.onPlay}
           onHeal={props.onHeal}
         />
-        <TamaBody />
+        <TamaBody 
+          tamagotchi={props.tamagotchi}
+        />
         <BottomMenu />
       </div>
 
@@ -55,6 +57,6 @@ TamaDetail.propTypes = {
   onSleep: PropTypes.func,
   onPlay: PropTypes.func,  
   onHeal: PropTypes.func
-}
+};
 
 export default TamaDetail;

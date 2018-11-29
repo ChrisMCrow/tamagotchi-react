@@ -11,4 +11,4 @@ function TamaList(props) {
 
 TamaList.PropTypes = {
   
-}
+};
