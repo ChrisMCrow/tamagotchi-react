@@ -15,10 +15,6 @@ function BottomMenu(props) {
     props.onDiscipline();
   }
 
-  function handleAlertButton() {
-    alert('Your Tamagotchi is crying! Check their stats to find out what\'s wrong!');
-  }
-
   return(
     <div id='bottom-menu-container'>
       <style jsx>{`
@@ -40,20 +36,20 @@ function BottomMenu(props) {
         .commandButtons * img:active {
           background-color: yellow;
         }
+        .no-hover img {
+          cursor: default !important;
+        }          
 
       `}</style>
       <ul className='commandButtons'>
         <li><img onClick={handleFlushButton} src="https://img.icons8.com/ios/50/000000/toilet-bowl-filled.png" /></li>
         <li><img onClick={handleStatsButton} src="https://img.icons8.com/ios/50/000000/scale-filled.png" /></li>
         <li><img onClick={handleDisciplineButton} src="https://img.icons8.com/material/50/000000/evil.png" /></li>
-        {
-          props.tamagotchi.alert ? (
-            <li className='animated flash infinite'><img onClick={handleAlertButton} src="https://img.icons8.com/ios/50/000000/error-filled.png" /></li>            
+        {props.tamagotchi.alert ? (
+            <li className='animated flash infinite no-hover'><img src="https://img.icons8.com/ios/50/000000/error-filled.png" /></li>            
           ) : (
-            <li className=''><img src="https://img.icons8.com/ios/50/000000/thumb-up-filled.png" /></li>  
-          )
-        }
-
+            <li className='no-hover'><img src="https://img.icons8.com/ios/50/000000/thumb-up-filled.png" /></li>  
+          )}
       </ul>
     </div>
   );

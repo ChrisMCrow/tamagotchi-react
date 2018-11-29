@@ -6,6 +6,7 @@ import TamaSleep from './assets/tamaSleep.png';
 import Stats from './Stats';
 import PoopImg from './assets/poop.png';
 import GhostImg from './assets/ghost.png';
+import SickImg from './assets/sick.png';
 
 function TamaBody(props) {
   const defaultStyle = 
@@ -23,6 +24,12 @@ function TamaBody(props) {
       }
       .poop-img {
         width: 100px;
+      }
+      .sick-img {
+        width: 70px;
+        position: absolute;
+        left: 40px;
+        top: 130px;
       }
     
     `}</style>;
@@ -49,6 +56,11 @@ function TamaBody(props) {
         ) : (
           <img />
         )}
+        {props.tamagotchi.isSick ? (
+          <img className='sick-img' src={SickImg}/>
+        ) : (
+          <img />
+        )}
       </div>
     );
   } else {
@@ -58,6 +70,11 @@ function TamaBody(props) {
         <img className='tama-sprite' src={TamaDefault} />
         {props.tamagotchi.isPoopy ? (
           <img className='poop-img' src={PoopImg}/>
+        ) : (
+          <img />
+        )}
+        {props.tamagotchi.isSick ? (
+          <img className='sick-img' src={SickImg}/>
         ) : (
           <img />
         )}

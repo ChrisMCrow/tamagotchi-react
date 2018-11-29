@@ -31,7 +31,6 @@ function Stats(props) {
       `}</style>
       <ul className="stats-container">
         <li>Name: {props.tamagotchi.name}</li>
-        <li>Weight: {props.tamagotchi.weight}</li>
         <li>Age: {props.tamagotchi.age}</li>
         <li>Food Level: {props.tamagotchi.foodLevel}</li>
         <li>Happiness: {props.tamagotchi.happiness}</li>

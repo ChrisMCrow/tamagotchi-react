@@ -39,10 +39,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.foodLevelInterval = setInterval(() => this.foodLevelTime(), 800);
-    this.sleepLevelInterval = setInterval(() => this.sleepLevelTime(), 500);
-    this.playLevellInterval = setInterval(() => this.playLevelTime(), 200);
+    this.foodLevelInterval = setInterval(() => this.foodLevelTime(), 1200);
+    this.sleepLevelInterval = setInterval(() => this.sleepLevelTime(), 800);
+    this.playLevellInterval = setInterval(() => this.playLevelTime(), 1000);
     this.ageInterval = setInterval(() => this.ageTime(), 10000);
+    this.badInterval = setInterval(() => this.disciplineTime())
     this.checkAlertInterval  = setInterval(() => {
       let tama = this.state.masterTama;
       if(tama.foodLevel < 25 || tama.sleepLevel <= 0 || tama.happiness < 25 || tama.isSick || tama.isPoopy || tama.isBad) {
@@ -53,7 +54,7 @@ class App extends React.Component {
     }, 1000);
     this.checkDeathInterval = setInterval(() => {
       let newTama = this.state.masterTama;
-      if(newTama.foodLevel <= 0 || newTama.happiness <= 0) {
+      if(newTama.foodLevel <= 0 || newTama.happiness <= 0 || newTama.isDead) {
         newTama.isDead = true;
         clearInterval(this.foodLevelInterval);
         clearInterval(this.sleepLevelInterval);
@@ -79,7 +80,9 @@ class App extends React.Component {
 
   sleepLevelTime() {
     let newTama = this.state.masterTama;
-    newTama.sleepLevel--;
+    if (newTama.sleepLevel > 0) {
+      newTama.sleepLevel--;
+    }
     this.setState({masterTama: newTama});
   }
 
@@ -147,7 +150,10 @@ class App extends React.Component {
             this.sleepLevelInterval = setInterval(() => this.sleepLevelTime(), 500);
             newTama.isSleeping = false;
           }
-        }, 1000);
+        }, 500);
+      } else {
+        newTama.isSleeping = false;
+        this.setState({masterTama: newTama});
       }
     }
   }
