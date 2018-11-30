@@ -246,7 +246,10 @@ class App extends React.Component {
           font-family: Helvetica;
 
           #logo {
-            width: 100%;
+            width: 500px;
+            margin-left: 40px;
+            margin-bottom: -180px;
+            z-index: 1;
           }
         `}</style>
         <img src={logo} id='logo'/>
