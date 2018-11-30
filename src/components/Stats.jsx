@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Background from './assets/background.png';
 
 function Stats(props) {
-  console.log(props.tamagotchi.displayHunger);
   return (
     <div className="tama-body">
       <style jsx>{`   
