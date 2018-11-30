@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Background from './assets/background.png';
 
 function Stats(props) {
+  console.log(props.tamagotchi.displayHunger);
   return (
     <div className="tama-body">
       <style jsx>{`   
@@ -32,11 +33,10 @@ function Stats(props) {
       <ul className="stats-container">
         <li>Name: {props.tamagotchi.name}</li>
         <li>Age: {props.tamagotchi.age}</li>
-        <li>Food Level: {props.tamagotchi.foodLevel}</li>
+        <li>Food Level: {props.tamgotchi.foodLevel}</li>
         <li>Happiness: {props.tamagotchi.happiness}</li>
         <li>Sleep Level: {props.tamagotchi.sleepLevel}</li>
         <li>Discipline Level: {props.tamagotchi.disciplineLevel}</li>
-        <li>Status: {props.tamagotchi.isPoopy ? 'Poopy' : 'none'}</li>
       </ul>
     </div>
   );

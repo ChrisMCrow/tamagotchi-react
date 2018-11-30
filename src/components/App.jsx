@@ -13,7 +13,7 @@ class App extends React.Component {
       {
         name: 'Melagotchi',
         foodLevel: 100,
-        sleepLevel: 50,
+        sleepLevel: 100,
         isSleeping: false,
         isRestless: false,
         happiness: 100,
@@ -114,9 +114,9 @@ class App extends React.Component {
 
   handleFeed() {
     let newTama = this.state.masterTama;
-    if (!newTama.isDead && !newTama.isSleeping) {
-      if (newTama.foodLevel < 75) {
-        newTama.foodLevel += 25;
+    if (!newTama.isDead && !newTama.isSleeping && !newTama.isRestless) {
+      if (newTama.foodLevel < 50) {
+        newTama.foodLevel += 50;
       } else if (newTama.foodLevel <= 100) {
         newTama.foodLevel = 100;
       }
@@ -192,9 +192,9 @@ class App extends React.Component {
 
   handlePlay() {
     let newTama = this.state.masterTama;
-    if (!newTama.isDead && !newTama.isSleeping) {
-      if (newTama.happiness < 75) {
-        newTama.happiness += 25;
+    if (!newTama.isDead && !newTama.isSleeping && !newTama.isRestless) {
+      if (newTama.happiness < 50) {
+        newTama.happiness += 50;
       } else if (newTama.happiness <= 100) {
         newTama.happiness = 100;
       } 

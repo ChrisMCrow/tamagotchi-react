@@ -30,7 +30,7 @@ function TamaBody(props) {
       }
       .tama-sad {
         width: 80px;
-        margin: 120px 0 0 130px;
+        margin: 110px 0 0 130px;
       }
       .tama-hungry {
         width: 90px;
@@ -38,15 +38,44 @@ function TamaBody(props) {
       }
       .poop-img {
         width: 100px;
+        position: absolute;
+        top: 120px;
+        right: 30px;
       }
       .sick-img {
-        width: 70px;
+        width: 60px;
         position: absolute;
         left: 40px;
+        top: 150px;
+      }
+      .sleepy-img {
+        font-weight: bold;
+        font-size: 20px;
+        position: absolute;
         top: 120px;
+        right: 120px;
       }
     
     `}</style>;
+  const status =
+    <div>
+      {props.tamagotchi.isPoopy ? (
+        <img className='poop-img' src={PoopImg}/>
+      ) : (
+        <img />
+      )}
+      {props.tamagotchi.isSick ? (
+        <img className='sick-img' src={SickImg}/>
+      ) : (
+        <img />
+      )}
+      {props.tamagotchi.isRestless ? (
+        <p className='sleepy-img animated tada infinite'>Zzzz</p>
+      ) : (
+        <img />
+      )}
+    </div>
+
   if(props.tamagotchi.displayStats){
     return(
       <div className='tama-body'>
@@ -65,16 +94,6 @@ function TamaBody(props) {
       <div className='tama-body'>
         {defaultStyle}
         <img className='tama-sprite' src={TamaSleep}/>
-        {props.tamagotchi.isPoopy ? (
-          <img className='poop-img' src={PoopImg}/>
-        ) : (
-          <img />
-        )}
-        {props.tamagotchi.isSick ? (
-          <img className='sick-img' src={SickImg}/>
-        ) : (
-          <img />
-        )}
       </div>
     );
   } else if (props.tamagotchi.happiness < 25) {
@@ -82,16 +101,7 @@ function TamaBody(props) {
       <div className='tama-body'>
         {defaultStyle}
         <img className='tama-sad' src={TamaSad}/>
-        {props.tamagotchi.isPoopy ? (
-          <img className='poop-img' src={PoopImg}/>
-        ) : (
-          <img />
-        )}
-        {props.tamagotchi.isSick ? (
-          <img className='sick-img' src={SickImg}/>
-        ) : (
-          <img />
-        )}
+        {status}
       </div>
     );
   } else if (props.tamagotchi.foodLevel < 25) {
@@ -99,33 +109,15 @@ function TamaBody(props) {
       <div className='tama-body'>
         {defaultStyle}
         <img className='tama-hungry' src={TamaHungry}/>
-        {props.tamagotchi.isPoopy ? (
-          <img className='poop-img' src={PoopImg}/>
-        ) : (
-          <img />
-        )}
-        {props.tamagotchi.isSick ? (
-          <img className='sick-img' src={SickImg}/>
-        ) : (
-          <img />
-        )}
+        {status}
       </div>
     );
   } else {
     return(
       <div className='tama-body'>
         {defaultStyle}
-        <img className='tama-sprite' src={TamaDefault} />
-        {props.tamagotchi.isPoopy ? (
-          <img className='poop-img' src={PoopImg}/>
-        ) : (
-          <img />
-        )}
-        {props.tamagotchi.isSick ? (
-          <img className='sick-img' src={SickImg}/>
-        ) : (
-          <img />
-        )}
+        <img className='tama-sprite animated bounce infinite' src={TamaDefault} />
+        {status}
       </div>
     );
   }
