@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import TopMenu from './TopMenu';
 import TamaBody from './TamaBody';
@@ -53,7 +53,10 @@ TamaDetail.propTypes = {
   onFeed: PropTypes.func,
   onSleep: PropTypes.func,
   onPlay: PropTypes.func,  
-  onHeal: PropTypes.func
+  onHeal: PropTypes.func,
+  onFlush: PropTypes.func,
+  onStats: PropTypes.func,
+  onDiscipline: PropTypes.func
 };
 
 export default TamaDetail;

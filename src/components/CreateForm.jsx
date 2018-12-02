@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { v4 } from 'uuid';
 
 function CreateForm(props) {
   let _newTamaName = null;
@@ -21,5 +20,9 @@ function CreateForm(props) {
     </div>
   );
 }
+
+CreateForm.propTypes = {
+  onNewTama: PropTypes.func
+};
 
 export default CreateForm;

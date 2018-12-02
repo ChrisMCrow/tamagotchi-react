@@ -69,7 +69,6 @@ class App extends React.Component {
 
   badTimeout() {
     setTimeout (() => { 
-      console.log('bad interval');
       this.misbehave();
       this.badTimeout();
     }, 1000 * this.state.masterTama.disciplineLevel);
@@ -100,7 +99,6 @@ class App extends React.Component {
   }
 
   misbehave() {
-    console.log('misbehave');
     let newTama = this.state.masterTama;
     newTama.isBad = true;
     this.setState({masterTama: newTama});
@@ -227,7 +225,6 @@ class App extends React.Component {
   }
 
   handleDiscipline() {
-    console.log('discipline button clicked');
     let newTama = this.state.masterTama;
     if (newTama.isBad) {
       newTama.disciplineLevel += 20; 

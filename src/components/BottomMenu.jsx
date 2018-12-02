@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 function BottomMenu(props) {
@@ -46,10 +46,10 @@ function BottomMenu(props) {
         <li><img onClick={handleStatsButton} src="https://img.icons8.com/ios/50/000000/scale-filled.png" /></li>
         <li><img onClick={handleDisciplineButton} src="https://img.icons8.com/material/50/000000/evil.png" /></li>
         {props.tamagotchi.alert ? (
-            <li className='animated flash infinite no-hover'><img src="https://img.icons8.com/ios/50/000000/error-filled.png" /></li>            
-          ) : (
-            <li className='no-hover'><img src="https://img.icons8.com/ios/50/000000/thumb-up-filled.png" /></li>  
-          )}
+          <li className='animated flash infinite no-hover'><img src="https://img.icons8.com/ios/50/000000/error-filled.png" /></li>            
+        ) : (
+          <li className='no-hover'><img src="https://img.icons8.com/ios/50/000000/thumb-up-filled.png" /></li>  
+        )}
       </ul>
     </div>
   );
@@ -60,6 +60,6 @@ BottomMenu.propTypes = {
   onStats: PropTypes.func,
   onDiscipline: PropTypes.func,
   tamagotchi: PropTypes.object
-}
+};
 
 export default BottomMenu;

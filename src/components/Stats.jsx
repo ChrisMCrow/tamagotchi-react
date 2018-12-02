@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Background from './assets/background.png';
+import PropTypes from 'prop-types';
 
 function Stats(props) {
   return (
@@ -32,7 +33,7 @@ function Stats(props) {
       <ul className="stats-container">
         <li>Name: {props.tamagotchi.name}</li>
         <li>Age: {props.tamagotchi.age}</li>
-        <li>Food Level: {props.tamgotchi.foodLevel}</li>
+        <li>Food Level: {props.tamagotchi.foodLevel}</li>
         <li>Happiness: {props.tamagotchi.happiness}</li>
         <li>Sleep Level: {props.tamagotchi.sleepLevel}</li>
         <li>Discipline Level: {props.tamagotchi.disciplineLevel}</li>
@@ -40,5 +41,9 @@ function Stats(props) {
     </div>
   );
 }
+
+Stats.propTypes = {
+  tamagotchi: PropTypes.object
+};
 
 export default Stats;

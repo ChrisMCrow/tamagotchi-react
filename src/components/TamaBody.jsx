@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Background from './assets/background.png';
 import TamaDefault from './assets/tamaDefault.png';
@@ -12,51 +12,53 @@ import TamaHungry from './assets/hungry.png';
 
 function TamaBody(props) {
   const defaultStyle = 
-    <style jsx>{`
-      .tama-body {
-        background-color: #f8f8f8;
-        background-image: url("${Background}");
-        background-size: 350px;
-        background-repeat: no-repeat;
-        height: 210px;
-      }
-      .dead-img {
-        width: 200px;
-        margin: 40px 0 0 70px;
-      }
-      .tama-sprite {
-        width: 100px;
-        margin: 90px 0 0 120px;
-      }
-      .tama-sad {
-        width: 80px;
-        margin: 110px 0 0 130px;
-      }
-      .tama-hungry {
-        width: 90px;
-        margin: 90px 0 0 120px;
-      }
-      .poop-img {
-        width: 100px;
-        position: absolute;
-        top: 120px;
-        right: 30px;
-      }
-      .sick-img {
-        width: 60px;
-        position: absolute;
-        left: 40px;
-        top: 150px;
-      }
-      .sleepy-img {
-        font-weight: bold;
-        font-size: 20px;
-        position: absolute;
-        top: 120px;
-        right: 120px;
-      }
-    
-    `}</style>;
+    <div>
+      <style jsx>{`
+        .tama-body {
+          background-color: #f8f8f8;
+          background-image: url("${Background}");
+          background-size: 350px;
+          background-repeat: no-repeat;
+          height: 210px;
+        }
+        .dead-img {
+          width: 200px;
+          margin: 40px 0 0 70px;
+        }
+        .tama-sprite {
+          width: 100px;
+          margin: 90px 0 0 120px;
+        }
+        .tama-sad {
+          width: 80px;
+          margin: 110px 0 0 130px;
+        }
+        .tama-hungry {
+          width: 90px;
+          margin: 90px 0 0 120px;
+        }
+        .poop-img {
+          width: 100px;
+          position: absolute;
+          top: 120px;
+          right: 30px;
+        }
+        .sick-img {
+          width: 60px;
+          position: absolute;
+          left: 40px;
+          top: 150px;
+        }
+        .sleepy-img {
+          font-weight: bold;
+          font-size: 20px;
+          position: absolute;
+          top: 120px;
+          right: 120px;
+        }
+      
+      `}</style>
+    </div>;
   const status =
     <div>
       {props.tamagotchi.isPoopy ? (
@@ -74,7 +76,7 @@ function TamaBody(props) {
       ) : (
         <img />
       )}
-    </div>
+    </div>;
 
   if(props.tamagotchi.displayStats){
     return(
@@ -88,7 +90,7 @@ function TamaBody(props) {
         {defaultStyle}
         <img className='dead-img' src={DeadImg}/>
       </div>
-    )
+    );
   } else if (props.tamagotchi.isSleeping) {
     return(
       <div className='tama-body'>
